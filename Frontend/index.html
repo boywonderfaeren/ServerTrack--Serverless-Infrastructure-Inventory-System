@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ServerTrack | Serverless Infrastructure Inventory</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="#home" class="logo">Server<span>Track</span></a>
+      <nav>
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#dashboard" class="btn btn-small">Open Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO / LANDING -->
+  <section class="hero" id="home">
+    <div class="container">
+      <p class="tag">Serverless &bull; AWS &bull; Always up to date</p>
+      <h1>Know every server you own.<br>Who owns it. What it costs.</h1>
+      <p class="hero-text">
+        ServerTrack is a simple inventory system for your cloud servers.
+        Add, view, update and delete server records in one organized place.
+      </p>
+      <div class="hero-buttons">
+        <a href="#dashboard" class="btn">Get Started</a>
+        <a href="#how" class="btn btn-outline">How it works</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="section" id="features">
+    <div class="container">
+      <h2>Why ServerTrack?</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Cost control</h3>
+          <p>Spot stopped or forgotten servers that are still costing money.</p>
+        </div>
+        <div class="card">
+          <h3>Accountability</h3>
+          <p>Every server has a team and an owner, so nothing is left unclaimed.</p>
+        </div>
+        <div class="card">
+          <h3>Fully serverless</h3>
+          <p>Built on S3, API Gateway, Lambda and DynamoDB. No servers to manage.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section alt" id="how">
+    <div class="container">
+      <h2>How it works</h2>
+      <div class="flow">
+        <div class="step">Browser</div>
+        <div class="arrow">&rarr;</div>
+        <div class="step">API Gateway</div>
+        <div class="arrow">&rarr;</div>
+        <div class="step">Lambda</div>
+        <div class="arrow">&rarr;</div>
+        <div class="step">DynamoDB</div>
+      </div>
+      <p class="center muted">
+        You click a button, API Gateway receives the request, Lambda does the work,
+        and DynamoDB stores the record.
+      </p>
+    </div>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section class="section" id="dashboard">
+    <div class="container">
+      <h2>Server Dashboard</h2>
+
+      <!-- Stats -->
+      <div class="stats">
+        <div class="stat"><span id="statTotal">0</span><p>Total servers</p></div>
+        <div class="stat"><span id="statRunning">0</span><p>Running</p></div>
+        <div class="stat"><span id="statStopped">0</span><p>Stopped</p></div>
+      </div>
+
+      <!-- Message box -->
+      <div id="message" class="message hidden"></div>
+
+      <!-- Form -->
+      <form id="serverForm" class="form">
+        <h3 id="formTitle">Add a new server</h3>
+        <input type="hidden" id="serverId">
+
+        <div class="grid">
+          <label>Server name
+            <input type="text" id="server_name" placeholder="web-prod-01" required>
+          </label>
+
+          <label>Environment
+            <select id="environment" required>
+              <option value="">Select</option>
+              <option value="production">Production</option>
+              <option value="staging">Staging</option>
+              <option value="development">Development</option>
+            </select>
+          </label>
+
+          <label>Instance type
+            <input type="text" id="instance_type" placeholder="t3.medium" required>
+          </label>
+
+          <label>IP address
+            <input type="text" id="ip_address" placeholder="10.0.1.25" required>
+          </label>
+
+          <label>Region
+            <input type="text" id="region" placeholder="us-east-1" required>
+          </label>
+
+          <label>Team
+            <input type="text" id="team" placeholder="platform" required>
+          </label>
+
+          <label>Status
+            <select id="status">
+              <option value="running">Running</option>
+              <option value="stopped">Stopped</option>
+              <option value="maintenance">Maintenance</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="form-buttons">
+          <button type="submit" class="btn" id="submitBtn">Add server</button>
+          <button type="button" class="btn btn-outline hidden" id="cancelBtn">Cancel edit</button>
+        </div>
+      </form>
+
+      <!-- Filters -->
+      <div class="filters">
+        <input type="text" id="searchBox" placeholder="Search by name, team or IP...">
+        <select id="statusFilter">
+          <option value="">All statuses</option>
+          <option value="running">Running</option>
+          <option value="stopped">Stopped</option>
+          <option value="maintenance">Maintenance</option>
+        </select>
+        <button class="btn btn-outline" id="refreshBtn" type="button">Refresh</button>
+      </div>
+
+      <!-- Table -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Environment</th>
+              <th>Type</th>
+              <th>IP address</th>
+              <th>Region</th>
+              <th>Team</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="serverTable">
+            <tr><td colspan="8" class="center muted">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>ServerTrack &mdash; Serverless Infrastructure Inventory System</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
